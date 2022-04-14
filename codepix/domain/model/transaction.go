@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"time"
 
 	"github.com/asaskevich/govalidator"
@@ -14,6 +15,10 @@ const (
 	TransactionConfirmed string = "confirmed"
 )
 
+type Transactions struct {
+	Transaction []Transaction
+}
+
 type Transaction struct {
 	Base              `valid:"required"`
 	AccountFrom       *Account `valid:"-"`
@@ -26,6 +31,19 @@ type Transaction struct {
 
 func (t *Transaction) isValid() error {
 	_, err := govalidator.ValidateStruct(t)
+
+	if t.Amount <= 0 {
+		return errors.New("The amount must be greater than 0")
+	}
+
+	if t.Status != TransactionPending && t.Status != TransactionCompleted && t.Status != TransactionError {
+		return errors.New("Invalid status for the transactions")
+	}
+
+	if t.PixKeyTo.AccountID == t.AccountFrom.ID {
+		return errors.New("The source and destination account cannot be the same")
+	}
+
 	if err != nil {
 		return err
 	}
