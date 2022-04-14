@@ -1,8 +1,0 @@
-# github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
-## explicit
-github.com/asaskevich/govalidator
-# github.com/google/uuid v1.3.0
-## explicit
-# github.com/satori/go.uuid v1.2.0
-## explicit
-github.com/satori/go.uuid

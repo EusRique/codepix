@@ -14,6 +14,7 @@ type Bank struct {
 
 //MÉTODO
 func (bank *Bank) isValid() error {
+	// Video no 1:27
 	return nil
 }
 
