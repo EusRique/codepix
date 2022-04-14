@@ -14,6 +14,11 @@ type Bank struct {
 	UpdateAt  time.Time `json:"update_at"`
 }
 
+//MÉTODO
+func (bank *Bank) isValid() error {
+	return nil
+}
+
 func newBank(code string, name string) (*Bank, error) {
 	bank := Bank{
 		Code: code,
