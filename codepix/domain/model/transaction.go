@@ -7,6 +7,13 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+const (
+	TransactionPending   string = "pending"
+	TransactionCompleted string = "completed"
+	TransactionError     string = "error"
+	TransactionConfirmed string = "confirmed"
+)
+
 type Transaction struct {
 	Base              `valid:"required"`
 	AccountFrom       *Account `valid:"-"`
@@ -31,7 +38,7 @@ func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, desc
 		AccountFrom: accountFrom,
 		Amount:      amount,
 		PixKeyTo:    pixKeyTo,
-		Status:      "",
+		Status:      TransactionPending,
 		Description: description,
 	}
 
