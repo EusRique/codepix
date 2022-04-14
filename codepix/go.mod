@@ -1,3 +1,8 @@
 module github.com/EusRique/codepix
 
 go 1.15
+
+require (
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/satori/go.uuid v1.2.0
+)

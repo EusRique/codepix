@@ -1,0 +1,5 @@
+# github.com/google/uuid v1.3.0
+## explicit
+# github.com/satori/go.uuid v1.2.0
+## explicit
+github.com/satori/go.uuid
