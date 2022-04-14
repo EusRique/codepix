@@ -70,3 +70,28 @@ func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, desc
 
 	return &transaction, nil
 }
+
+func (t *Transaction) Complete() error {
+	t.Status = TransactionCompleted
+	t.UpdateAt = time.Now()
+	err := t.isValid()
+
+	return err
+}
+
+func (t *Transaction) Confirm() error {
+	t.Status = TransactionConfirmed
+	t.UpdateAt = time.Now()
+	err := t.isValid()
+
+	return err
+}
+
+func (t *Transaction) Cancel(description string) error {
+	t.Status = TransactionError
+	t.UpdateAt = time.Now()
+	t.Description = description
+	err := t.isValid()
+
+	return err
+}
