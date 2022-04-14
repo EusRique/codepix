@@ -9,11 +9,10 @@ import (
 
 type Bank struct {
 	Base `valid:"required"`
-	Code string `json: "code" valid:"notnull"`
-	Name string `json: "name" valid:"notnull"`
+	Code string `json:"code" valid:"notnull"`
+	Name string `json:"name" valid:"notnull"`
 }
 
-//MÉTODO
 func (bank *Bank) isValid() error {
 	_, err := govalidator.ValidateStruct(bank)
 	if err != nil {
