@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/asaskevich/govalidator"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -14,7 +15,11 @@ type Bank struct {
 
 //MÉTODO
 func (bank *Bank) isValid() error {
-	// Video no 1:27
+	_, err := govalidator.ValidateStruct(bank)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
