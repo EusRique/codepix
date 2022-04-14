@@ -3,6 +3,7 @@ module github.com/EusRique/codepix
 go 1.15
 
 require (
+	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/satori/go.uuid v1.2.0
 )
