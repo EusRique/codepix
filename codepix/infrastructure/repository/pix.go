@@ -17,3 +17,12 @@ func (r PixKeyRepositoryDb) AddBank(bank *model.Bank) error {
 
 	return nil
 }
+
+func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
+	err := r.DB.Create(account).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
