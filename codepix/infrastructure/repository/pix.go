@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"fmt"
+
 	"github.com/EusRique/codepix/domain/model"
 	"github.com/jinzhu/gorm"
 )
@@ -34,4 +36,16 @@ func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, er
 	}
 
 	return pixKey, nil
+}
+
+func (r PixKeyRepositoryDb) FindKeyById(key string, kind string) (*model.PixKey, error) {
+	var pixKey model.PixKey
+
+	r.DB.Preload("Account.Bank").First(&pixKey, "kind = ? and key = ?", kind, key)
+
+	if pixKey.ID == "" {
+		return nil, fmt.Errorf("No key was found")
+	}
+
+	return &pixKey, nil
 }
