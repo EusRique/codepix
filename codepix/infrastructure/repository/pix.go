@@ -49,3 +49,15 @@ func (r PixKeyRepositoryDb) FindKeyById(key string, kind string) (*model.PixKey,
 
 	return &pixKey, nil
 }
+
+func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
+	var account model.Account
+
+	r.DB.Preload("Bank").First(&account, "id = ?", id)
+
+	if account.ID == "" {
+		return nil, fmt.Errorf("No Account found")
+	}
+
+	return &account, nil
+}
