@@ -17,3 +17,10 @@ func (t *TransactionRepositoryDb) Register(transaction *model.Transaction) error
 
 	return nil
 }
+
+func (t *TransactionRepositoryDb) Save(transaction *model.Transaction) error {
+	err := t.Db.Save(transaction).Error
+	if err != nil {
+		return nil
+	}
+}
