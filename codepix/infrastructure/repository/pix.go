@@ -8,11 +8,11 @@ import (
 )
 
 type PixKeyRepositoryDb struct {
-	DB *gorm.DB
+	Db *gorm.DB
 }
 
 func (r PixKeyRepositoryDb) AddBank(bank *model.Bank) error {
-	err := r.DB.Create(bank).Error
+	err := r.Db.Create(bank).Error
 	if err != nil {
 		return err
 	}
@@ -21,7 +21,7 @@ func (r PixKeyRepositoryDb) AddBank(bank *model.Bank) error {
 }
 
 func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
-	err := r.DB.Create(account).Error
+	err := r.Db.Create(account).Error
 	if err != nil {
 		return err
 	}
@@ -30,7 +30,7 @@ func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
 }
 
 func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, error) {
-	err := r.DB.Create(pixKey).Error
+	err := r.Db.Create(pixKey).Error
 	if err != nil {
 		return nil, err
 	}
@@ -38,10 +38,10 @@ func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, er
 	return pixKey, nil
 }
 
-func (r PixKeyRepositoryDb) FindKeyById(key string, kind string) (*model.PixKey, error) {
+func (r PixKeyRepositoryDb) FindKeyByKind(key string, kind string) (*model.PixKey, error) {
 	var pixKey model.PixKey
 
-	r.DB.Preload("Account.Bank").First(&pixKey, "kind = ? and key = ?", kind, key)
+	r.Db.Preload("Account.Bank").First(&pixKey, "kind = ? and key = ?", kind, key)
 
 	if pixKey.ID == "" {
 		return nil, fmt.Errorf("No key was found")
@@ -53,7 +53,7 @@ func (r PixKeyRepositoryDb) FindKeyById(key string, kind string) (*model.PixKey,
 func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
 	var account model.Account
 
-	r.DB.Preload("Bank").First(&account, "id = ?", id)
+	r.Db.Preload("Bank").First(&account, "id = ?", id)
 
 	if account.ID == "" {
 		return nil, fmt.Errorf("No Account found")
@@ -65,7 +65,7 @@ func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
 func (r PixKeyRepositoryDb) FindBank(id string) (*model.Bank, error) {
 	var bank model.Bank
 
-	r.DB.First(&bank, "id = ?", id)
+	r.Db.First(&bank, "id = ?", id)
 
 	if bank.ID == "" {
 		return nil, fmt.Errorf(" No bank found")
