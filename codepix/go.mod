@@ -8,7 +8,10 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.4.0
 	github.com/lib/pq v1.10.5
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/satori/go.uuid v1.2.0
+	github.com/spf13/cobra v1.4.0
+	github.com/spf13/viper v1.11.0
 	google.golang.org/grpc v1.46.0
 	google.golang.org/protobuf v1.28.0
 	gorm.io/driver/sqlite v1.3.2
