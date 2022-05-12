@@ -115,6 +115,11 @@ func (k *KafkaProcessor) processTransactionConfirmation(msg *ckafka.Message) err
 		if err != nil {
 			return err
 		}
+	} else if transaction.Status == model.TransactionCompleted {
+		_, err := transactionUseCase.Complete(transaction.ID)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
