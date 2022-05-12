@@ -5,6 +5,7 @@ import (
 
 	"github.com/EusRique/codepix/application/factory"
 	appModel "github.com/EusRique/codepix/application/model"
+	"github.com/EusRique/codepix/domain/model"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/jinzhu/gorm"
 )
@@ -81,8 +82,19 @@ func (k *KafkaProcessor) processTransaction(msg *ckafka.Message) error {
 		fmt.Println("Error registering transaction", err)
 		return err
 	}
-	fmt.Println(createdTransaction)
+
+	topic := "bank" + createdTransaction.PixKeyTo.Account.Bank.Code
+	transaction.ID = createdTransaction.ID
+	transaction.Status = model.TransactionPending
+	transactionJson, err := transaction.ToJson()
+	if err != nil {
+		return err
+	}
+
+	err = Publish(string(transactionJson), topic, k.Producer, k.DeliveryChan)
+	if err != nil {
+		return err
+	}
 
 	return nil
-
 }
