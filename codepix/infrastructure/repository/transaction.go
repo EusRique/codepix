@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/EusRique/codepix/domain/model"
-	"gorm.io/gorm"
+	"github.com/jinzhu/gorm"
 )
 
 type TransactionRepositoryDb struct {
@@ -29,7 +29,7 @@ func (t *TransactionRepositoryDb) Save(transaction *model.Transaction) error {
 	return nil
 }
 
-func (t *TransactionRepositoryDb) find(id string) (*model.Transaction, error) {
+func (t *TransactionRepositoryDb) Find(id string) (*model.Transaction, error) {
 	var transaction model.Transaction
 	t.Db.Preload("AccountFrom.Bank").First(&transaction, "id = ?", id)
 

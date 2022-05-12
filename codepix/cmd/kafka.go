@@ -17,8 +17,10 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/EusRique/codepix/application/kafka"
+	"github.com/EusRique/codepix/infrastructure/db"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/spf13/cobra"
 )
@@ -29,10 +31,16 @@ var kafkaCmd = &cobra.Command{
 	Short: "Start consuming transaction using Apache Kafka",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Produzindo mensagem...")
+
 		deliveryChan := make(chan ckafka.Event)
+		database := db.ConnectDB(os.Getenv("env"))
 		producer := kafka.NewKafkaProducer()
-		kafka.Publish("Olá Kafka", "teste", producer, deliveryChan)
-		kafka.DeliveryReport(deliveryChan)
+
+		kafka.Publish("Olá Consumer", "teste", producer, deliveryChan)
+		go kafka.DeliveryReport(deliveryChan)
+
+		kafkaProcessor := kafka.NewKafkaProcessor(database, producer, deliveryChan)
+		kafkaProcessor.Consume()
 	},
 }
 
