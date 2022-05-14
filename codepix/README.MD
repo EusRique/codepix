@@ -12,7 +12,8 @@ Utilizamos Docker para que todos os serviços que utilizaremos fiquem disponíve
 
 ### Como executar a aplicação
 - Acesse o container da aplicação executando: `docker exec -it codepix_app bash`
-- Rode `go run main.go grpc`
+- Para ver os comandos disponíveis Rode `go run main.go`
+- Para rodar toda aplicação, server do gRPC e o Kafka Rode `go run main.go all`
 
 **Importante:** O arquivo para executar o projeto talvez ainda não tenha sido criado ou tenha mudado.
 
